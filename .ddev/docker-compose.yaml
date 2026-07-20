@@ -2,16 +2,16 @@ name: ddev-mysite
 services:
   db:
     build:
-      context: /home/meep/Sites/mysite/.ddev/.dbimageBuild
+      context: ${PROJECT_ROOT}/.ddev/.dbimageBuild
       dockerfile: Dockerfile
       args:
         BASE_IMAGE: ddev/ddev-dbserver-mariadb-11.8:v1.25.3
         gid: "1000"
         uid: "1000"
-        username: meep
+        username: ${DDEV_USER}
       labels:
         com.ddev.app-type: wordpress
-        com.ddev.approot: /home/meep/Sites/mysite
+        com.ddev.approot: ${PROJECT_ROOT}
         com.ddev.platform: ddev
         com.ddev.site-name: mysite
         com.ddev.webtag: v1.25.3
@@ -40,10 +40,10 @@ services:
       DDEV_SITENAME: mysite
       DDEV_TLD: ddev.site
       DDEV_UID: "1000"
-      DDEV_USER: meep
+      DDEV_USER: ${DDEV_USER}
       DDEV_VERSION: v1.25.3
       DOCKER_IP: 127.0.0.1
-      HOME: /home/meep
+      HOME: ${HOME}
       HOST_DOCKER_INTERNAL_IP: ""
       IS_DDEV_PROJECT: "true"
       LINES: "30"
@@ -56,7 +56,7 @@ services:
       POSTGRES_PASSWORD: db
       POSTGRES_USER: db
       TZ: America/New_York
-      USER: meep
+      USER: ${DDEV_USER}
     hostname: mysite-db
     healthcheck:
       test:
@@ -70,7 +70,7 @@ services:
     image: ddev/ddev-dbserver-mariadb-11.8:v1.25.3-mysite-built
     labels:
       com.ddev.app-type: wordpress
-      com.ddev.approot: /home/meep/Sites/mysite
+      com.ddev.approot: ${PROJECT_ROOT}
       com.ddev.platform: ddev
       com.ddev.site-name: mysite
       com.ddev.webtag: v1.25.3
@@ -93,21 +93,21 @@ services:
         volume:
           nocopy: true
       - type: bind
-        source: /home/meep/Sites/mysite/.ddev
+        source: ${PROJECT_ROOT}/.ddev
         target: /mnt/ddev_config
         bind: {}
       - type: bind
-        source: /home/meep/Sites/mysite/.ddev/db_snapshots
+        source: ${PROJECT_ROOT}/.ddev/db_snapshots
         target: /mnt/snapshots
         bind: {}
       - type: volume
         source: ddev-global-cache
         target: /mnt/ddev-global-cache
         volume: {}
-    working_dir: /home/meep
+    working_dir: ${HOME}
   web:
     build:
-      context: /home/meep/Sites/mysite/.ddev/.webimageBuild
+      context: ${PROJECT_ROOT}/.ddev/.webimageBuild
       dockerfile: Dockerfile
       args:
         BASE_IMAGE: ddev/ddev-webserver:v1.25.3
@@ -115,10 +115,10 @@ services:
         DDEV_PHP_VERSION: "8.4"
         gid: "1000"
         uid: "1000"
-        username: meep
+        username: ${DDEV_USER}
       labels:
         com.ddev.app-type: wordpress
-        com.ddev.approot: /home/meep/Sites/mysite
+        com.ddev.approot: ${PROJECT_ROOT}
         com.ddev.platform: ddev
         com.ddev.site-name: mysite
         com.ddev.webtag: v1.25.3
@@ -155,7 +155,7 @@ services:
       DDEV_SITENAME: mysite
       DDEV_TLD: ddev.site
       DDEV_UID: "1000"
-      DDEV_USER: meep
+      DDEV_USER: ${DDEV_USER}
       DDEV_VERSION: v1.25.3
       DDEV_WEB_ENTRYPOINT: /mnt/ddev_config/web-entrypoint.d
       DDEV_WEBSERVER_TYPE: nginx-fpm
@@ -181,7 +181,7 @@ services:
       PHP_IDE_CONFIG: serverName=mysite.ddev.site
       SSH_AUTH_SOCK: /home/.ssh-agent/socket
       TZ: America/New_York
-      USER: meep
+      USER: ${DDEV_USER}
       VIRTUAL_HOST: mysite.ddev.site
       npm_config_cache: /mnt/ddev-global-cache/npm
     hostname: mysite-web
@@ -197,7 +197,7 @@ services:
     image: ddev/ddev-webserver:v1.25.3-mysite-built
     labels:
       com.ddev.app-type: wordpress
-      com.ddev.approot: /home/meep/Sites/mysite
+      com.ddev.approot: ${PROJECT_ROOT}
       com.ddev.platform: ddev
       com.ddev.site-name: mysite
       com.ddev.webtag: v1.25.3
@@ -223,11 +223,11 @@ services:
     user: 1000:1000
     volumes:
       - type: bind
-        source: /home/meep/Sites/mysite
+        source: ${PROJECT_ROOT}
         target: /var/www/html
         consistency: cached
       - type: bind
-        source: /home/meep/Sites/mysite/.ddev
+        source: ${PROJECT_ROOT}/.ddev
         target: /mnt/ddev_config
         read_only: true
         bind: {}
@@ -270,7 +270,7 @@ services:
     image: ddev/ddev-xhgui:v1.25.3
     labels:
       com.ddev.app-type: wordpress
-      com.ddev.approot: /home/meep/Sites/mysite
+      com.ddev.approot: ${PROJECT_ROOT}
       com.ddev.platform: ddev
       com.ddev.site-name: mysite
       com.ddev.webtag: v1.25.3
@@ -288,7 +288,7 @@ networks:
     name: ddev-mysite_default
     labels:
       com.ddev.app-type: wordpress
-      com.ddev.approot: /home/meep/Sites/mysite
+      com.ddev.approot: ${PROJECT_ROOT}
       com.ddev.platform: ddev
       com.ddev.site-name: mysite
       com.ddev.webtag: v1.25.3
