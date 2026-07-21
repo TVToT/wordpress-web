@@ -43,6 +43,70 @@ Bedrock is a WordPress boilerplate for developers that want to manage their proj
 
 See the [Bedrock installation documentation](https://roots.io/bedrock/docs/installation/).
 
+prerequsites
+## Windows
+WSL 2
+
+1. Git
+
+2. PHP
+    sudo apt install php php-cli php-mbstring php-xml php-curl php-zip unzip -y
+3. Composer
+    cd ~
+    curl -sS https://getcomposer.org/installer | php
+    sudo mv composer.phar /usr/local/bin/composer
+    composer --version
+4. Node.js
+    If you need a new install:
+      curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+    Otherwise:
+      nvm install --lts
+      nvm use --lts
+7. MySQL
+    sudo apt install mysql-server -y
+    sudo service mysql start
+
+Debian/Ubuntu
+```
+# Ensure sudo credentials are cached for copy/paste of this block
+sudo true
+
+# Add DDEV’s GPG key to your keyring
+sudo apt-get update && sudo apt-get install -y curl
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://pkg.ddev.com/apt/gpg.key | sudo tee /etc/apt/keyrings/ddev.asc > /dev/null
+sudo chmod a+r /etc/apt/keyrings/ddev.asc
+
+# Remove old repository files if present
+sudo rm -f /etc/apt/keyrings/ddev.gpg /etc/apt/sources.list.d/ddev.list
+
+# Add DDEV releases to your package repository
+printf "Types: deb\nURIs: https://pkg.ddev.com/apt/\nSuites: *\nComponents: *\nSigned-By: /etc/apt/keyrings/ddev.asc\n" | sudo tee /etc/apt/sources.list.d/ddev.sources >/dev/null
+
+# Update package information and install DDEV
+sudo apt-get update && sudo apt-get install -y ddev
+
+# One-time initialization of mkcert
+mkcert -install
+```
+
+## MacOS
+```
+# Install DDEV
+brew install ddev/ddev/ddev
+
+# One-time initialization of mkcert
+mkcert -install
+
+# One-time initialization of mkcert
+mkcert -install
+```
+OR
+
+Install Script
+```
+# Download and run the install script
+curl -fsSL https://ddev.com/install.sh | bash
 ## Community
 
 Keep track of development and community news.
